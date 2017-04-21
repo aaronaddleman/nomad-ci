@@ -1,4 +1,4 @@
-$script = <<SCRIPT
+script = <<SCRIPT
 
 # Install Java and dnsmasq
 apt-get install -y unzip daemon dnsmasq
@@ -49,17 +49,15 @@ sudo service dnsmasq restart
 SCRIPT
 
 Vagrant.configure(2) do |config|
- 
-  config.vm.define "ci" do |ci|
-    ci.vm.box = "ubuntu/trusty64"
-    ci.vm.network "private_network", ip: "192.168.10.10"
-    ci.vm.provider "virtualbox" do |vb|
+  config.vm.define 'ci' do |ci|
+    ci.vm.box = 'ubuntu/trusty64'
+    ci.vm.network 'private_network', ip: '192.168.10.10'
+    ci.vm.provider 'virtualbox' do |vb|
       vb.memory = 5120
       vb.cpus = 2
     end
-    ci.vm.synced_folder ".", "/vagrant"
-    ci.vm.provision "docker"
-    ci.vm.provision "shell", inline: $script
+    ci.vm.synced_folder '.', '/vagrant'
+    ci.vm.provision 'docker'
+    ci.vm.provision 'shell', inline: script
   end
-
 end
